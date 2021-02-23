@@ -8,6 +8,8 @@ const navesContador = document.getElementById("naves");
 
 
 preencherContadores();
+preencherTabela();
+
 function preencherContadores() {
     //personagensContador.innerHTML = swapiGet('people/').count;
     Promise.all([swapiGet('people/'), 
@@ -22,6 +24,23 @@ function preencherContadores() {
         console.log(results);
   });
 
+}
+
+async function preencherTabela(){
+    const response = await swapiGet('films/');
+    
+    const tableData = response.data.results;
+    console.log(tableData);
+    tableData.forEach(film =>{
+    $('#filmsTable').append(`<tr>
+    <td>${film.title}</td>
+    <td>${moment(film.release_date).format('DD/MM/YYYY')}</td>
+    <td>${film.director}</td>
+    <td>${film.episode_id}</td>
+    </tr>`)
+
+    })
+    
 }
 
 
